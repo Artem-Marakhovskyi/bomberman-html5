@@ -1,5 +1,5 @@
-export class FieldConstants {
-    static BORDER_WIDTH = 10;
-    static CELLS_SIZE = 20;
-    static SIZE_PX = 820;
+function FieldConstants() {
+    this.BORDER_WIDTH = 10;
+    this.CELLS_SIZE = 20;
+    this.SIZE_PX = 820;
 }

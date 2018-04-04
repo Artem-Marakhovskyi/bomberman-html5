@@ -1,3 +1,3 @@
-export class GameConsants {
-    CYCLE_TIME_MS = 100;
+function GameConstants() {
+    this.CYCLE_TIME_MS = 100;
 }
