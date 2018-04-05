@@ -1,7 +1,7 @@
 function Game() {
 
     this.start = function() {
-        setInterval(engine.handle, 50);
+        setInterval(engine.cycle, 5);
     }  
 
 }

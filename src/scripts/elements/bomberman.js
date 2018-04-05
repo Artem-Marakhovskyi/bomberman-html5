@@ -1,42 +1,98 @@
 
 function Bomberman(x, y, size) {
     var direction = directionConstants.NOTHING;
-    
+    var isGoing = false;
+
     var figureHeight = 75;
     var figureWidth = 50;
+    var figureSize = size;
 
-    var currentFieldX = 0;
-    var currentFieldY = 0;
-    var currentSpeed = 3;
+    var currentFieldX = x;
+    var currentFieldY = y;
+    var currentSpeed = 1;
 
     var image =  new Image();
     image.src='images/bomberman.png';
     image.onload = function() {
-        ctx.drawImage(image, currentFieldX, currentFieldY, figureWidth, figureHeight, x, y, size, size);
+        ctx.drawImage(
+            image, 
+            0, 
+            0, 
+            figureWidth,
+            figureHeight, 
+            currentFieldX, 
+            currentFieldY, 
+            size, 
+            size);
     };
 
-    this.cycle() = function() {
+    this.cycle = function() {
+
+        if(!isGoing) return false;
+
+        var movementObject = canMove();
+        if (!movementObject.canMove) {
+            isGoing = false;
+            direction = directionConstants.NOTHING;
+            return;
+        }
+
         ctx.clearRect(
             currentFieldX, 
             currentFieldY, 
             size, 
             size); 
+            
+            
+        if (field.tryUpdatePosition(
+            currentFieldX, currentFieldY,
+            movementObject.x, movementObject.y,
+            elementConstants.BOMBERMAN)) {
+                isGoing = false;
+                direction = directionConstants.NOTHING;
+            }
+        currentFieldX = movementObject.x;
+        currentFieldY = movementObject.y;
+
+        ctx.drawImage(image, 0, 0, figureWidth, figureHeight, currentFieldX, currentFieldY, size, size);            
+        
+    }
+
+    this.changeDirection = function (newDirection) {
+        if (!isGoing) {
+            direction = newDirection;
+            isGoing = true;
+        }
+    }
+
+    function canMove() {
+        var intentionX = currentFieldX;
+        var intentionY = currentFieldY;
+        var canMove = false;
 
         switch(direction)
         {
             case directionConstants.UP: 
-                currentFieldY -= currentSpeed;
+                intentionY -= currentSpeed;
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
                 break;
             case directionConstants.DOWN:
-                currentFieldY += currentSpeed;
+                intentionY += currentSpeed;
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
                 break;
             case directionConstants.LEFT:
-                currentFieldX -= currentSpeed;
+                intentionX -= currentSpeed;
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
                 break;
             case directionConstants.RIGHT:
-                currentFieldX += currentSpeed;
+                intentionX += currentSpeed;
+                canMove = canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
                 break;                
         }
-        ctx.drawImage(image, currentFieldX, currentFieldY, figureWidth, figureHeight, x, y, size, size);            
+        return {
+                canMove: canMove,
+                x: parseInt(intentionX),
+                y: parseInt(intentionY)
+            };
     }
 }
