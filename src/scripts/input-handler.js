@@ -1,0 +1,5 @@
+function InputHandler() {
+    function handle() {
+        
+    }
+}

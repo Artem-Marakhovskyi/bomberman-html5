@@ -1,11 +1,7 @@
 function Game() {
 
-    var prepareField = function() {
-        
-    }
-
     this.start = function() {
-        prepareField();
+        setInterval(engine.handle, 50);
     }  
 
 }
