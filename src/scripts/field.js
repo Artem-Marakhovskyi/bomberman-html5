@@ -29,7 +29,7 @@ function Field() {
                 switch (arrayOfArrays[r][c])
                 { 
                     case 'B':
-                        drawBomberman();
+                        drawBomberman(c, r);
                         break;
                     case 'd':
                         drawDestroyable();
@@ -46,7 +46,7 @@ function Field() {
                 }
             }
         }
-
+        
         function drawEmpty() {
             
         }
@@ -63,24 +63,24 @@ function Field() {
             new Destroyable(c * cellSize, r * cellSize, cellSize);
         }
 
-        function drawBomberman() {
-            player = new Bomberman(c * cellSize, r * cellSize, cellSize);
+        function drawBomberman(cellX, cellY) {
+            player = new Bomberman(c * cellSize, r * cellSize, cellSize, cellX, cellY);
         }
     }
 
-    this.tryUpdatePosition = function(fromX, fromY, toX, toY, who) {
+    this.tryUpdatePosition = function(stableX, stableY, toX, toY, who) {
         
         if (toX % cellSize !== 0 || toY % cellSize !== 0) return false;
 
-        var elementType = this.getElementType(fromX, fromY);
+        var elementType = this.currentField[stableY][stableX];
         var newElementType = this.getElementType(toX, toY);
 
         switch (who) {
             case elementConstants.BOMBERMAN: 
-                return this.updatePositionForBomberman(elementType, newElementType, fromX, fromY, toX, toY);
+                return this.updatePositionForBomberman(elementType, newElementType, stableX, stableY, toX, toY);
                 break;
             case elementConstants.ALIEN: 
-                return this.updatePositionForAlien(elementPosition, newElementType, fromX, fromY, toX, toY);
+                return this.updatePositionForAlien(elementPosition, newElementType, stableX, stableY, toX, toY);
                 break;
         }
 
@@ -98,20 +98,27 @@ function Field() {
         return elementType;
     }
 
-    this.updatePositionForBomberman = function(elementType, newElementType, x, y, oldX, oldY) {
-        if (elementType === newElementType) return false;
+    this.updatePositionForBomberman = function(elementType, newElementType, stableX, stableY, x, y) {
+        if (elementType === newElementType) 
+            return {
+                updated: false
+            };
 
         switch (newElementType){
             case elementConstants.EMPTY:
             this.currentField[this.getCellPosition(y)][this.getCellPosition(x)] = elementConstants.BOMBERMAN;
-            this.currentField[this.getCellPosition(oldY)][this.getCellPosition(oldX)] = elementConstants.EMPTY;
+            this.currentField[stableY][stableX] = elementConstants.EMPTY;
                 break;
             case elementConstants.ALIEN:
                 alert('GAME OVER');
                 break;
         }
 
-        return true;
+        return {
+            updated: true,
+            newX: this.getCellPosition(x),
+            newY: this.getCellPosition(y),
+        };
     }
 
     this.updatePositionForAlien = function(elementType, newElementType, x, y, oldX, oldY) {

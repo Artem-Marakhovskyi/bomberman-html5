@@ -1,5 +1,5 @@
 
-function Bomberman(x, y, size) {
+function Bomberman(x, y, size, stablePositionX, stablePositionY) {
     var direction = directionConstants.NOTHING;
     var isGoing = false;
 
@@ -10,6 +10,9 @@ function Bomberman(x, y, size) {
     var currentFieldX = x;
     var currentFieldY = y;
     var currentSpeed = 1;
+
+    this.xPosition = stablePositionX;
+    this.yPosition = stablePositionY;
 
     var image =  new Image();
     image.src='images/bomberman.png';
@@ -43,13 +46,16 @@ function Bomberman(x, y, size) {
             size, 
             size); 
             
-            
-        if (field.tryUpdatePosition(
-            currentFieldX, currentFieldY,
+        var updateObject = field.tryUpdatePosition(
+            this.xPosition, this.yPosition,
             movementObject.x, movementObject.y,
-            elementConstants.BOMBERMAN)) {
+            elementConstants.BOMBERMAN);    
+        if (updateObject.updated) {
                 isGoing = false;
                 direction = directionConstants.NOTHING;
+
+                this.xPosition = updateObject.newX;
+                this.yPosition = updateObject.newY;
             }
         currentFieldX = movementObject.x;
         currentFieldY = movementObject.y;
