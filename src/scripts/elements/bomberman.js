@@ -9,7 +9,7 @@ function Bomberman(x, y, size, stablePositionX, stablePositionY) {
 
     var currentFieldX = x;
     var currentFieldY = y;
-    var currentSpeed = 1;
+    var currentSpeed = 4;
 
     this.xPosition = stablePositionX;
     this.yPosition = stablePositionY;
@@ -80,19 +80,19 @@ function Bomberman(x, y, size, stablePositionX, stablePositionY) {
         {
             case directionConstants.UP: 
                 intentionY -= currentSpeed;
-                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize, elementConstants.BOMBERMAN);
                 break;
             case directionConstants.DOWN:
                 intentionY += currentSpeed;
-                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize, elementConstants.BOMBERMAN);
                 break;
             case directionConstants.LEFT:
                 intentionX -= currentSpeed;
-                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
+                canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize, elementConstants.BOMBERMAN);
                 break;
             case directionConstants.RIGHT:
                 intentionX += currentSpeed;
-                canMove = canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize);
+                canMove = canMove = collisionResolver.canMoveTo(intentionX, intentionY, figureSize, elementConstants.BOMBERMAN);
                 break;                
         }
         return {

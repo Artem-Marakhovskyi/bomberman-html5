@@ -7,6 +7,7 @@ var stages;
 var directionConstants;
 var engine;
 var player;
+var aliens = [];
 var inputHandler;
 var collisionResolver;
 var field;

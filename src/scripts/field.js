@@ -35,7 +35,7 @@ function Field() {
                         drawEmpty();
                         break;
                     case 'A':
-                        drawAlien();
+                        drawAlien(c, r);
                         break;
                     case 'w':
                         drawWall();
@@ -52,8 +52,8 @@ function Field() {
             new Wall(c * cellSize, r * cellSize, cellSize);
         }
 
-        function drawAlien() {
-            new Alien(c * cellSize, r * cellSize, cellSize);
+        function drawAlien(cellX, cellY) {
+            aliens.push(new Alien(c * cellSize, r * cellSize, cellSize, cellX, cellY));
         }
 
         function drawPlayer(cellX, cellY) {
@@ -73,7 +73,7 @@ function Field() {
                 return this.updatePositionForBomberman(elementType, newElementType, stableX, stableY, toX, toY);
                 break;
             case elementConstants.ALIEN: 
-                return this.updatePositionForAlien(elementPosition, newElementType, stableX, stableY, toX, toY);
+                return this.updatePositionForAlien(elementType, newElementType, stableX, stableY, toX, toY);
                 break;
         }
 
@@ -99,12 +99,12 @@ function Field() {
 
         switch (newElementType){
             case elementConstants.EMPTY:
-            this.currentField[this.getCellPosition(y)][this.getCellPosition(x)] = elementConstants.BOMBERMAN;
-            this.currentField[stableY][stableX] = elementConstants.EMPTY;
+                this.currentField[this.getCellPosition(y)][this.getCellPosition(x)] = elementConstants.BOMBERMAN;
+                this.currentField[stableY][stableX] = elementConstants.EMPTY;
                 break;
-            case elementConstants.ALIEN:
-                alert('GAME OVER');
-                break;
+            case elementConstants.FINISH:
+                alert('Congratulations!!!');
+                break;                
         }
 
         return {
