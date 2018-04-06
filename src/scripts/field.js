@@ -29,10 +29,7 @@ function Field() {
                 switch (arrayOfArrays[r][c])
                 { 
                     case 'B':
-                        drawBomberman(c, r);
-                        break;
-                    case 'd':
-                        drawDestroyable();
+                        drawPlayer(c, r);
                         break;
                     case '_':
                         drawEmpty();
@@ -59,11 +56,7 @@ function Field() {
             new Alien(c * cellSize, r * cellSize, cellSize);
         }
 
-        function drawDestroyable() {
-            new Destroyable(c * cellSize, r * cellSize, cellSize);
-        }
-
-        function drawBomberman(cellX, cellY) {
+        function drawPlayer(cellX, cellY) {
             player = new Bomberman(c * cellSize, r * cellSize, cellSize, cellX, cellY);
         }
     }

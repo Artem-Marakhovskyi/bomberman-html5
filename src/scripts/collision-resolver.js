@@ -28,7 +28,7 @@ function CollisionResolver() {
     }
 
     function allowedElementType(elementType) {
-        return elementType === elementConstants.EMPTY || elementType === elementConstants.BOMBERMAN;
+        return elementType === elementConstants.EMPTY || elementType === elementConstants.BOMBERMAN || elementType === elementConstants.FINISH;
     }
 
 

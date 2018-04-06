@@ -5,7 +5,7 @@ function InputHandler(body) {
 
     function handle(e) {
         var code = e.code;
-
+            console.log(e.code);
         switch(code)
         {
             case 'ArrowLeft':
