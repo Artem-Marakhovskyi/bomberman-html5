@@ -107,6 +107,8 @@ function Field() {
                 break;                
         }
 
+        showArray();
+
         return {
             updated: true,
             newX: this.getCellPosition(x),
@@ -114,10 +116,21 @@ function Field() {
         };
     }
 
-    this.updatePositionForAlien = function(elementType, newElementType, x, y, oldX, oldY) {
-        this.currentField[this.getCellPosition(y)][this.getCellPosition(x)] = elementConstants.ALIEN;
-        this.currentField[this.getCellPosition(oldY)][this.getCellPosition(oldX)] = elementConstants.EMPTY;
+    this.updatePositionForAlien = function(elementType, newElementType, stableX, stableY, x, y) {
+        if (elementType === newElementType) 
+        return {
+            updated: false
+        };
 
-        return true;
+        this.currentField[stableY][stableX] = elementConstants.EMPTY;
+        this.currentField[this.getCellPosition(y)][this.getCellPosition(x)] = elementConstants.ALIEN;
+
+        showArray();
+
+        return {
+            updated: true,
+            newX: this.getCellPosition(x),
+            newY: this.getCellPosition(y),
+        };;
     }
 }

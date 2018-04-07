@@ -28,13 +28,21 @@ function CollisionResolver() {
     }
 
     function allowedElementType(elementType, fromElement) {
-        if (fromElement === elementConstants.BOMBERMAN)
+        if (fromElement === elementConstants.BOMBERMAN) {
+            if (elementType === elementConstants.ALIEN) {
+                alert('GAME OVER');
+            }
+         
             return elementType === elementConstants.EMPTY 
                 || elementType === elementConstants.BOMBERMAN 
                 || elementType === elementConstants.FINISH;
+        }
         else  
+            if (elementType === elementConstants.BOMBERMAN) {
+                alert('GAME OVER');
+            }
+
             return elementType === elementConstants.EMPTY 
-                || elementType === elementConstants.BOMBERMAN 
                 || elementType === elementConstants.ALIEN;
 
     }

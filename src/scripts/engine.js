@@ -4,5 +4,6 @@ function Engine() {
         for(var i = 0; i< aliens.length; i++) {
             aliens[i].cycle();
         }
+       // collisionResolver.check();
     } 
 }

@@ -19,7 +19,6 @@ function Alien(x, y, size, stablePositionX, stablePositionY) {
 
         var movementObject = canMove();
         if (!movementObject.canMove) {
-            isGoing = false;
             direction = directionConstants.random();
             
             return;
@@ -36,9 +35,6 @@ function Alien(x, y, size, stablePositionX, stablePositionY) {
             movementObject.x, movementObject.y,
             elementConstants.ALIEN);    
         if (updateObject.updated) {
-                isGoing = false;
-                direction = directionConstants.NOTHING;
-
                 this.xPosition = updateObject.newX;
                 this.yPosition = updateObject.newY;
             }
